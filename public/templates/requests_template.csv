@@ -1,0 +1,5 @@
+Type,RequestID,VesselName,IMO,CallSign,ETA,BerthRequested,CargoType,Weight,ContactName,ContactPhone,Notes,Latitude,Longitude,WarehouseID,StartDate,EndDate,GoodsType,Quantity,Dimensions,OwnerName,OwnerPhone
+ship,,MV Mediterranean Express,9876543,MED-EX,2026-02-18T09:00:00Z,Berth 2,General Cargo,10000,محمد الشرقاوي,01001234567,شحنة منتظرة,31.5862,31.8159,,,,,,,,
+ship,,MV Neptune Container,7654321,NEPT-CN,2026-02-25T14:30:00Z,Berth 4,Container,8500,أحمد علي,01201234567,حاوية 40 قدم,31.5870,31.8160,,,,,,,,
+warehouse,,,,,,,,,,,,,,WH-001,2026-02-16,2026-05-16,Frozen Foods,100,50x30x25,شركة الثلج البارد,01234567890,درجة حرارة -18
+warehouse,,,,,,,,,,,,,,WH-COLD-02,2026-02-20,2026-04-20,Chemicals,45,30x25x20,شركة النيل للكيماويات,01111111111,معدات حماية مطلوبة

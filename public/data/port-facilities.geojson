@@ -1,0 +1,139 @@
+{
+  "type": "FeatureCollection",
+  "name": "Damietta Port Facilities",
+  "crs": {
+    "type": "name",
+    "properties": {
+      "name": "EPSG:4326"
+    }
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 1,
+        "name": "رصيف 1 / Berth 1",
+        "type": "berth",
+        "status": "available",
+        "capacity": "50000 DWT",
+        "length": "350m",
+        "depth": "15.5m"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [31.802, 31.413]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 2,
+        "name": "رصيف 2 / Berth 2",
+        "type": "berth",
+        "status": "occupied",
+        "capacity": "50000 DWT",
+        "length": "350m",
+        "depth": "15.5m"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [31.803, 31.413]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 3,
+        "name": "مخزن 1 / Warehouse 1",
+        "type": "warehouse",
+        "status": "available",
+        "area": "5000 m²",
+        "capacity": "500 tons",
+        "location": "North Yard"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [31.801, 31.413]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 4,
+        "name": "مخزن 2 / Warehouse 2",
+        "type": "warehouse",
+        "status": "occupied",
+        "area": "5000 m²",
+        "capacity": "500 tons",
+        "location": "South Yard"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [31.802, 31.412]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 5,
+        "name": "ساحة الحاويات / Container Yard",
+        "type": "yard",
+        "status": "available",
+        "area": "15000 m²",
+        "capacity": "5000 TEU",
+        "equipment": "STS Crane, RTG"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [31.8, 31.414]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 6,
+        "name": "مستودع المعادن / Metal Storage",
+        "type": "warehouse",
+        "status": "available",
+        "area": "3000 m²",
+        "capacity": "1000 tons",
+        "climate_controlled": true
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [31.799, 31.413]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 7,
+        "name": "مستودع الأخشاب / Timber Storage",
+        "type": "warehouse",
+        "status": "occupied",
+        "area": "4000 m²",
+        "capacity": "800 tons",
+        "open_air": true
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [31.8, 31.412]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 8,
+        "name": "محطة الوقود / Fuel Station",
+        "type": "facility",
+        "status": "available",
+        "type_fuel": "Marine Diesel, Fuel Oil",
+        "capacity": "5000 tons"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [31.8025, 31.4125]
+      }
+    }
+  ]
+}

@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تنظيف البيانات - Port Navigator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            direction: rtl;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 500px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+
+        p {
+            color: #666;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .status {
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+            font-weight: bold;
+        }
+
+        .status.info {
+            background: #e3f2fd;
+            color: #1976d2;
+        }
+
+        .status.success {
+            background: #e8f5e9;
+            color: #388e3c;
+        }
+
+        .status.warning {
+            background: #fff3e0;
+            color: #f57c00;
+        }
+
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 16px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            font-weight: bold;
+            margin: 10px;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        .secondary {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+
+        ul {
+            text-align: right;
+            margin: 20px 0;
+            list-style-position: inside;
+        }
+
+        li {
+            margin: 10px 0;
+            color: #555;
+        }
+
+        .icon {
+            font-size: 50px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="icon">🧹</div>
+        <h1>تنظيف البيانات المحفوظة</h1>
+        <p>هذه الصفحة ستساعدك على حذف جميع البيانات المحفوظة وجعل التطبيق كأنه أول مرة</p>
+
+        <div class="status info" id="status">
+            📊 البيانات المحفوظة حالياً:
+            <ul id="dataList"></ul>
+        </div>
+
+        <button onclick="clearAllData()">🗑️ حذف جميع البيانات</button>
+        <button class="secondary" onclick="goToApp()">← العودة للتطبيق</button>
+
+        <div class="status warning" style="margin-top: 30px; font-size: 14px;">
+            ⚠️ لمسح الكاش بالكامل:<br>
+            <strong>Chrome/Edge:</strong> اضغط Ctrl+Shift+Delete<br>
+            <strong>Firefox:</strong> اضغط Ctrl+Shift+Delete<br>
+            واختر "Cached images and files"
+        </div>
+    </div>
+
+    <script>
+        // عرض البيانات المحفوظة
+        function displayStoredData() {
+            const dataList = document.getElementById('dataList');
+            const keys = Object.keys(localStorage);
+
+            if (keys.length === 0) {
+                dataList.innerHTML = '<li>✅ لا توجد بيانات محفوظة</li>';
+            } else {
+                dataList.innerHTML = keys.map(key => {
+                    const value = localStorage.getItem(key);
+                    const size = new Blob([value]).size;
+                    return `<li>🔑 ${key} (${size} bytes)</li>`;
+                }).join('');
+            }
+        }
+
+        // حذف جميع البيانات
+        function clearAllData() {
+            const confirmed = confirm('هل أنت متأكد من حذف جميع البيانات المحفوظة؟\n\nسيتم حذف:\n• الجلسة الحالية\n• الطلبات المحفوظة\n• الشكاوى المحفوظة\n• جميع الإعدادات');
+
+            if (confirmed) {
+                // حذف localStorage
+                localStorage.clear();
+
+                // حذف sessionStorage
+                sessionStorage.clear();
+
+                // محاولة حذف الكوكيز
+                document.cookie.split(";").forEach(function (c) {
+                    document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/");
+                });
+
+                // تحديث الحالة
+                const statusDiv = document.getElementById('status');
+                statusDiv.className = 'status success';
+                statusDiv.innerHTML = '✅ تم حذف جميع البيانات بنجاح!<br><br>يمكنك الآن العودة للتطبيق والبدء من جديد';
+
+                displayStoredData();
+
+                // إعادة تحميل الصفحة بعد 2 ثانية
+                setTimeout(() => {
+                    if (confirm('هل تريد الانتقال للتطبيق الآن؟')) {
+                        window.location.href = '/';
+                    }
+                }, 2000);
+            }
+        }
+
+        // العودة للتطبيق
+        function goToApp() {
+            window.location.href = '/';
+        }
+
+        // عرض البيانات عند تحميل الصفحة
+        displayStoredData();
+    </script>
+</body>
+
+</html>
