@@ -196,7 +196,7 @@ const App = () => (
                 <Toaster />
                 <Sonner />
                 <FeedbackModal />
-                <BrowserRouter>
+                <BrowserRouter basename="/DPA">
                   <AppRoutes />
                 </BrowserRouter>
               </TooltipProvider>

@@ -1,55 +1,73 @@
 <!doctype html>
 <html lang="ar" dir="rtl">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    
-    <!-- Basic Meta Tags -->
-    <title>منصة ميناء دمياط الذكية - Port Navigator</title>
-    <meta name="description" content="منصة ميناء دمياط الذكية - نظام إدارة متكامل للطلبات والشكاوى والخرائط التفاعلية" />
-    <meta name="author" content="هيئة ميناء دمياط" />
-    <meta name="keywords" content="ميناء، دمياط، نظام إدارة، طلبات، شكاوى، خريطة" />
-    <meta name="theme-color" content="#1e293b" />
 
-    <!-- Open Graph -->
-    <meta property="og:title" content="منصة ميناء دمياط الذكية" />
-    <meta property="og:description" content="نظام إدارة متكامل للميناء مع دعم العمل بدون إنترنت" />
-    <meta property="og:type" content="website" />
-    <meta property="og:image" content="/assets/opengraph.png" />
-    <meta property="og:url" content="https://port-navigator.damietta.gov.eg/" />
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:site" content="@portdamietta" />
-    <meta name="twitter:image" content="/assets/opengraph.png" />
+  <!-- Basic Meta Tags -->
+  <title>منصة ميناء دمياط الذكية - Port Navigator</title>
+  <meta name="description" content="منصة ميناء دمياط الذكية - نظام إدارة متكامل للطلبات والشكاوى والخرائط التفاعلية" />
+  <meta name="author" content="هيئة ميناء دمياط" />
+  <meta name="keywords" content="ميناء، دمياط، نظام إدارة، طلبات، شكاوى، خريطة" />
+  <meta name="theme-color" content="#1e293b" />
 
-    <!-- PWA Meta Tags -->
-    <meta name="mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-    <meta name="apple-mobile-web-app-title" content="Port Navigator" />
-    <meta name="application-name" content="Port Navigator" />
-    <meta name="msapplication-TileColor" content="#1e293b" />
+  <!-- Open Graph -->
+  <meta property="og:title" content="منصة ميناء دمياط الذكية" />
+  <meta property="og:description" content="نظام إدارة متكامل للميناء مع دعم العمل بدون إنترنت" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="/assets/opengraph.png" />
+  <meta property="og:url" content="https://port-navigator.damietta.gov.eg/" />
 
-    <!-- Favicons -->
-    <link rel="icon" href="/maps/شعار هيئة ميناء دمياط.jpg" />
-    <link rel="apple-touch-icon" href="/assets/icon-192x192.png" />
-    <link rel="manifest" href="/manifest.json" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@portdamietta" />
+  <meta name="twitter:image" content="/assets/opengraph.png" />
 
-    <!-- Service Worker -->
-    <script>
-      if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-          navigator.serviceWorker.register('/sw.js').catch(err => {
-            console.warn('[SW Registration Failed]', err);
-          });
-        });
+  <!-- PWA Meta Tags -->
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="Port Navigator" />
+  <meta name="application-name" content="Port Navigator" />
+  <meta name="msapplication-TileColor" content="#1e293b" />
+
+  <!-- Favicons -->
+  <link rel="icon" href="/maps/شعار هيئة ميناء دمياط.jpg" />
+  <link rel="apple-touch-icon" href="/assets/icon-192x192.png" />
+  <link rel="manifest" href="/manifest.json" />
+
+  <!-- SPA GitHub Pages redirect script -->
+  <script>
+    // Single Page Apps for GitHub Pages
+    // https://github.com/rafgraph/spa-github-pages
+    (function (l) {
+      if (l.search[1] === '/') {
+        var decoded = l.search.slice(1).split('&').map(function (s) {
+          return s.replace(/~and~/g, '&')
+        }).join('?');
+        window.history.replaceState(null, null,
+          l.pathname.slice(0, -1) + decoded + l.hash
+        );
       }
-    </script>
-  </head>
+    }(window.location))
+  </script>
 
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+  <!-- Service Worker -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js').catch(err => {
+          console.warn('[SW Registration Failed]', err);
+        });
+      });
+    }
+  </script>
+</head>
+
+<body>
+  <div id="root"></div>
+  <script type="module" src="/src/main.tsx"></script>
+</body>
+
 </html>
