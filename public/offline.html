@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>بدون اتصال - Port Navigator</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 1rem;
+    }
+
+    .offline-container {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      padding: 3rem 2rem;
+      max-width: 500px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .offline-icon {
+      width: 100px;
+      height: 100px;
+      margin: 0 auto 2rem;
+      background: #f0f4ff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 50px;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        transform: scale(1);
+        opacity: 1;
+      }
+      50% {
+        transform: scale(0.95);
+        opacity: 0.8;
+      }
+    }
+
+    h1 {
+      color: #1e293b;
+      margin-bottom: 0.5rem;
+      font-size: 28px;
+    }
+
+    .subtitle {
+      color: #64748b;
+      font-size: 16px;
+      margin-bottom: 1.5rem;
+    }
+
+    .message {
+      background: #f1f5f9;
+      border-right: 4px solid #667eea;
+      padding: 1rem;
+      border-radius: 8px;
+      margin-bottom: 2rem;
+      text-align: right;
+      color: #475569;
+    }
+
+    .status-info {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .status-item {
+      background: #f8fafc;
+      padding: 1rem;
+      border-radius: 8px;
+      border: 1px solid #e2e8f0;
+    }
+
+    .status-label {
+      font-size: 12px;
+      color: #94a3b8;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 0.5rem;
+    }
+
+    .status-value {
+      font-size: 18px;
+      font-weight: bold;
+      color: #1e293b;
+    }
+
+    .status-value.good {
+      color: #10b981;
+    }
+
+    .status-value.warning {
+      color: #f59e0b;
+    }
+
+    .status-value.critical {
+      color: #ef4444;
+    }
+
+    .actions {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .btn {
+      padding: 0.75rem 1.5rem;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .btn-primary {
+      background: #667eea;
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: #5568d3;
+      transform: translateY(-2px);
+      box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+    }
+
+    .btn-secondary {
+      background: #f1f5f9;
+      color: #1e293b;
+      border: 1px solid #e2e8f0;
+    }
+
+    .btn-secondary:hover {
+      background: #e2e8f0;
+      transform: translateY(-2px);
+    }
+
+    .offline-tips {
+      margin-top: 2rem;
+      padding-top: 2rem;
+      border-top: 1px solid #e2e8f0;
+    }
+
+    .tips-title {
+      color: #1e293b;
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      text-align: right;
+    }
+
+    .tips-list {
+      text-align: right;
+      list-style: none;
+    }
+
+    .tips-list li {
+      color: #64748b;
+      font-size: 13px;
+      margin-bottom: 0.5rem;
+      padding-right: 1.5rem;
+      position: relative;
+    }
+
+    .tips-list li:before {
+      content: "✓";
+      color: #10b981;
+      font-weight: bold;
+      position: absolute;
+      right: 0;
+    }
+
+    .cached-info {
+      background: #dbeafe;
+      border-right: 4px solid #3b82f6;
+      padding: 1rem;
+      border-radius: 8px;
+      margin-top: 1.5rem;
+      color: #1e40af;
+      font-size: 13px;
+      text-align: right;
+    }
+
+    .connection-indicator {
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      margin-left: 0.5rem;
+      animation: blink 1s infinite;
+    }
+
+    .connection-indicator.offline {
+      background: #ef4444;
+    }
+
+    @keyframes blink {
+      0%, 49% {
+        opacity: 1;
+      }
+      50%, 100% {
+        opacity: 0.3;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .offline-container {
+        padding: 2rem 1.5rem;
+      }
+
+      h1 {
+        font-size: 24px;
+      }
+
+      .status-info {
+        grid-template-columns: 1fr;
+      }
+
+      .offline-icon {
+        width: 80px;
+        height: 80px;
+        font-size: 40px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="offline-container">
+    <div class="offline-icon">📡</div>
+    
+    <h1>بدون اتصال<span class="connection-indicator offline"></span></h1>
+    <p class="subtitle">لا يوجد اتصال بالإنترنت في الوقت الحالي</p>
+
+    <div class="message">
+      🔄 يمكنك الوصول إلى البيانات المخزنة مسبقاً والعمل بدون إنترنت
+    </div>
+
+    <div class="status-info">
+      <div class="status-item">
+        <div class="status-label">حالة الاتصال</div>
+        <div class="status-value critical" id="connection-status">غير متصل</div>
+      </div>
+      <div class="status-item">
+        <div class="status-label">البيانات المخزنة</div>
+        <div class="status-value good" id="cached-size">متاحة</div>
+      </div>
+    </div>
+
+    <div class="actions">
+      <button class="btn btn-primary" onclick="tryConnecting()">
+        🔄 حاول الاتصال مجدداً
+      </button>
+      <button class="btn btn-secondary" onclick="goHome()">
+        🏠 الذهاب للصفحة الرئيسية
+      </button>
+    </div>
+
+    <div class="cached-info">
+      <strong>✓ البيانات المتاحة بدون اتصال:</strong>
+      <ul style="margin-top: 0.5rem; margin-right: 0;">
+        <li>✓ الخرائط والصور المحفوظة</li>
+        <li>✓ بيانات الطلبات والشكاوى</li>
+        <li>✓ الإعدادات والتفضيلات</li>
+      </ul>
+    </div>
+
+    <div class="offline-tips">
+      <p class="tips-title">💡 نصائح مفيدة:</p>
+      <ul class="tips-list">
+        <li>تحقق من اتصالك بالإنترنت</li>
+        <li>أعد تشغيل جهاز الراوتر</li>
+        <li>حاول الاتصال مجدداً بعد قليل</li>
+        <li>تأكد من تشغيل خدمات الشبكة</li>
+      </ul>
+    </div>
+  </div>
+
+  <script>
+    // التحقق من الاتصال
+    function updateConnectionStatus() {
+      const status = document.getElementById('connection-status');
+      
+      if (navigator.onLine) {
+        status.textContent = 'متصل';
+        status.className = 'status-value good';
+        setTimeout(() => {
+          window.location.href = '/';
+        }, 1500);
+      } else {
+        status.textContent = 'غير متصل';
+        status.className = 'status-value critical';
+      }
+    }
+
+    function tryConnecting() {
+      // محاولة جلب مورد من الخادم للتحقق من الاتصال
+      fetch('/manifest.json', { method: 'HEAD' })
+        .then(() => {
+          updateConnectionStatus();
+        })
+        .catch(() => {
+          alert('لا يزال التطبيق غير متصل بالإنترنت');
+        });
+    }
+
+    function goHome() {
+      window.location.href = '/';
+    }
+
+    // التحقق الأولي
+    window.addEventListener('online', () => {
+      updateConnectionStatus();
+    });
+
+    window.addEventListener('offline', () => {
+      const status = document.getElementById('connection-status');
+      status.textContent = 'غير متصل';
+      status.className = 'status-value critical';
+    });
+
+    // تحديث الحالة عند التحميل
+    updateConnectionStatus();
+  </script>
+</body>
+</html>
